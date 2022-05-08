@@ -1,0 +1,28 @@
+version: '3'
+
+volumes:
+  db-data:
+
+services:
+  web:        # 任意の名称
+    build: .  # ビルドコンテキスト
+    ports:
+      - '3000:3000' # railsのデフォルトポート
+    volumes:
+      - '.:/product-register' # 相対パスで指定する
+    environment:
+      - 'POSTGRES_USER=postgres'
+      - 'POSTGRES_PASSWORD=postgres'
+      #- 'DATABASE_PASSWORD=postgres'
+    tty: true         # ティティイ：-it の t
+    stdin_open: true  # it の i(input)
+    depends_on:
+      - db
+    links: 
+      - db
+
+  db:
+    image: postgres   # DockerHubからイメージを取得する
+    volumes:
+      - 'db-data:/var/lib/postgresql/data'
+     
