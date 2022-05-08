@@ -25,4 +25,6 @@ services:
     image: postgres   # DockerHubからイメージを取得する
     volumes:
       - 'db-data:/var/lib/postgresql/data'
+    environment:
+      - 'POSTGRES_HOST_AUTH_METHOD=trust'
      
